@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon List{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    <div class="pokemon-container">
+        {% for pokemon in pokemonList %}
+            {% set imagePath = "images//#{pokemon.pokedexNumber}.png" %}
+            {% set primaryTypePath = "images//#{pokemon.primaryType}.png" %}
+            {% set secondaryTypePath = pokemon.secondaryType ? "images//#{pokemon.secondaryType}.png" : null %}
+
+            <div class="pokemon">
+                <img src="{{ asset(imagePath) }}" alt="{{ pokemon.name }} Image">
+                <p>{{ pokemon.name }}</p>
+                <div class="types">
+                    <img src="{{ asset(primaryTypePath) }}" alt="{{ pokemon.primaryType }} Type">
+                    {% if secondaryTypePath %}
+                        <img src="{{ asset(secondaryTypePath) }}" alt="{{ pokemon.secondaryType }} Type">
+                    {% endif %}
+                </div>
+                <p>#{{ pokemon.pokedexNumber }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+
+
+

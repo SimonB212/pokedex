@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon List{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    <div class="pokemon-container">
+        {% for pokemon in pokemonList %}
+            <div class="pokemon">
+                <img src="{{ asset('images/uploads/pokemons/' ~ pokemon.image) }}" alt="{{ pokemon.name }} Image">
+                <img src="{{ asset(imagePath) }}" alt="{{ pokemon.name }} Image">
+                <div>{{ pokemon.name }}</div>
+                <div class="types">
+                    <img src="{{ asset('images/' ~ pokemon.primaryType) }}" alt="{{ pokemon.primaryType }} Type">
+                    {% if secondaryTypePath %}
+                        <img src="{{ asset('images/' ~ pokemon.secondaryType) }}" alt="{{ pokemon.secondaryType }} Type">
+                    {% endif %}
+                </div>
+                <p>#{{ pokemon.pokedexNumber }}</p>
+                <button class="star-button {{ pokemon.favorite ? 'yellow-star' : '' }}" data-pokemon-name="{{ pokemon.name }}" onclick="toggleStar(this, {{ pokemon.id }})">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path class="star-path" d="M12 2 L14.5 8.5 L22 9 L17 13 L18.5 20.5 L12 17 L5.5 20.5 L7 13 L2 9 L9.5 8.5 Z"></path>
+                    </svg>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function toggleStar(button, pokemonId) {
+            const yellowStarClass = 'yellow-star';
+
+
+            // Toggle the yellow-star class
+            button.classList.toggle(yellowStarClass);
+
+            // Send an AJAX request to update the favorite status
+            $.ajax({
+                url: `/updateFavorite/${pokemonId}`, // Toggle the value
+                method: 'POST', // You can adjust the HTTP method as needed
+                success: function (response) {
+                    // Update the pokemon.favorite property based on the server response
+                    if (response.success) {
+                        pokemon.favorite = response.favorite; // Update the favorite status
+                    }
+                },
+                error: function (error) {
+                    // Handle any errors if needed
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+
+
+

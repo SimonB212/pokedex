@@ -1,0 +1,38 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block contenu %}
+    <a href="{{ path('app_admin_pokemon_ajouter') }}" class="btn btn-primary">Ajouter un pokemon</a>
+
+    <div class="container">
+        <h1>Tableau d'informations</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Pokedex Number</th>
+                <th>Name</th>
+                <th>Primary Type</th>
+                <th>Secondary Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pokemon in pokemonList %}
+                <tr>
+                    <td>{{ pokemon.pokedexNumber }}</td>
+                    <td>{{ pokemon.name }}</td>
+                    <td>{{ pokemon.primaryType }}</td>
+                    <td>{{ pokemon.secondaryType }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_pokemon_modifier', {'id': pokemon.id}) }}" class="btn btn-primary">Modifier</a>
+                        <button class="btn btn-danger" onclick="if (confirm('Êtes-vous sûr ?')) { window.location.href = '{{ path('app_admin_pokemon_supprimer', {'id': pokemon.id}) }}'; }">Supprimer</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for flashMessage in app.flashes('success') %}
+                <div class="alert alert-success">{{ flashMessage }}</div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

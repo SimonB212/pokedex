@@ -1,0 +1,36 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block contenu %}
+
+    <h1>
+        {{ app.request.get('_route') == "app_admin_pokemon_ajouter" ? 'Ajouter' : 'Modifier' }} un pokemon
+    </h1>
+
+    <div class="container">
+        {{ form_start(form) }}
+
+        <div class="col-4">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.pokedexNumber) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.primaryType) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.secondaryType) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.favorite) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.image) }}
+        </div>
+
+        <button class="btn btn-success" type="submit">Ajouter</button>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
